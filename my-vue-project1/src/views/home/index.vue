@@ -1,19 +1,34 @@
 <template>
   <div>HOME PAGE</div>
-  <a-button type="primary" @click="changeTagName">Primary</a-button>
-  <Tag :value="tagname"></Tag>
+  <a-button v-bind="buttonProps" @click="changeTagName">Primary</a-button>
+  <tag-modal
+    :open="tagState.open"
+    :value="tagState.value"
+    @ok="tagState.open = false"
+    @cancel="tagState.open = false"
+  ></tag-modal>
 </template>
 <script setup>
-import { ref } from 'vue';
-import Tag from './components/tag/index.vue';
+import { reactive } from 'vue';
+import TagModal from './components/tag/index.vue';
+
+const buttonProps = {
+  type: 'link',
+  loading: false,
+  size: 'middle',
+};
 
 const nameList = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9'];
 
-const tagname = ref('TAG NAME');
+const tagState = reactive({
+  open: false,
+  value: 'TAG NAME',
+});
 
 const changeTagName = () => {
   // 0-1 0-8
   const r = Math.floor(Math.random() * 9);
-  tagname.value = nameList[r];
+  tagState.open = true;
+  tagState.value = nameList[r];
 };
 </script>

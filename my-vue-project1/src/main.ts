@@ -6,13 +6,13 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from './router';
 
-import { Button } from 'ant-design-vue';
+import { Button, Modal } from 'ant-design-vue';
 
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(router);
 
-app.use(Button);
+app.use(Button).use(Modal);
 
 app.mount('#app');
