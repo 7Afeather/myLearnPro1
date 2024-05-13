@@ -10,6 +10,7 @@ const props = defineProps({
   },
 });
 const currentValue = computed(() => {
+  //   console.log('currentValue变化了', props.value);
   return props.value;
 });
 </script>
