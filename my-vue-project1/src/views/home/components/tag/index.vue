@@ -1,25 +1,53 @@
 <template>
   <a-modal
     :open="open"
-    :title="modalState.title"
+    :title="currentValue"
     :confirm-loading="modalState.confirmLoading"
     @cancel="$emit('cancel')"
     @ok="handleOk"
   >
-    <p>{{ currentValue }}</p>
+    <a-table :columns="fixedColumns" :data-source="data.costomerList" :pagination="false" bordered>
+      <template #summary>
+        <a-table-summary fixed>
+          <a-table-summary-row>
+            <a-table-summary-cell :col-span="2">数量汇总</a-table-summary-cell>
+            <a-table-summary-cell :index="fixedColumns.findIndex(item => item.dataIndex === 'num')">
+              20
+            </a-table-summary-cell>
+            <a-table-summary-cell
+              :index="fixedColumns.findIndex(item => item.dataIndex === 'address')"
+            >
+              21
+            </a-table-summary-cell>
+            <a-table-summary-cell :index="fixedColumns.findIndex(item => item.dataIndex === 'age')">
+              22
+            </a-table-summary-cell>
+          </a-table-summary-row>
+        </a-table-summary>
+      </template>
+    </a-table>
   </a-modal>
 </template>
-<script setup>
-import { computed, watch, reactive } from 'vue';
-const props = defineProps({
-  open: {
-    type: Boolean,
-    default: false,
-  },
-  value: {
-    type: String,
-    default: null,
-  },
+<script setup lang="ts">
+import { computed, watch, reactive, ref } from 'vue';
+import type { TableColumnsType } from 'ant-design-vue';
+
+export interface DataProps {
+  supplierCode?: string;
+  supplierName?: string;
+  costomerList?: any[];
+}
+
+export interface Props {
+  open?: boolean;
+  value?: string;
+  data?: DataProps;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  open: false,
+  value: null,
+  data: () => {},
 });
 const emit = defineEmits(['ok', 'cancel']);
 const currentValue = computed(() => {
@@ -41,4 +69,33 @@ const modalState = reactive({
 const handleOk = () => {
   emit('ok');
 };
+
+const fixedColumns = ref<TableColumnsType>([
+  {
+    title: '名称',
+    dataIndex: 'name',
+    fixed: true,
+    width: 100,
+  },
+  {
+    title: '描述',
+    dataIndex: 'description',
+    width: 100,
+  },
+  {
+    title: '数量',
+    dataIndex: 'num',
+    width: 100,
+  },
+  {
+    title: '地址',
+    dataIndex: 'address',
+    width: 100,
+  },
+  {
+    title: '年龄',
+    dataIndex: 'age',
+    width: 100,
+  },
+]);
 </script>
