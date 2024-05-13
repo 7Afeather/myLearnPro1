@@ -1,15 +1,15 @@
 <template>
-  <div>{{ currentValue }}</div>
+  <div>HOME PAGE</div>
+  <a-button type="primary" @click="changeTagName">Primary</a-button>
+  <Tag :value="tagname"></Tag>
 </template>
 <script setup>
-import { computed } from 'vue';
-const props = defineProps({
-  value: {
-    type: String,
-    default: null,
-  },
-});
-const currentValue = computed(() => {
-  return props.value;
-});
+import { ref } from 'vue';
+import Tag from './components/tag/index.vue';
+
+const tagname = ref('TAG NAME');
+
+const changeTagName = () => {
+  tagname.value = 'NEW TAG NAME';
+};
 </script>
