@@ -1,81 +1,130 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import HelloWorld from './components/HelloWorld.vue';
-</script>
-
 <template>
+  <a-layout>
+    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <div class="logo" />
+      <a-menu
+        v-model:selectedKeys="state.selectedKeys"
+        style="width: 256px"
+        mode="inline"
+        :open-keys="state.openKeys"
+        :items="items"
+        @openChange="onOpenChange"
+      ></a-menu>
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header style="background: #fff; padding: 0">
+        <menu-unfold-outlined
+          v-if="collapsed"
+          class="trigger"
+          @click="() => (collapsed = !collapsed)"
+        />
+        <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+      </a-layout-header>
+      <a-layout-content
+        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+      >
+        Content
+      </a-layout-content>
+    </a-layout>
+  </a-layout>
+
   <header>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <router-link to="/">Home</router-link>
+        <router-link to="/about">About</router-link>
       </nav>
     </div>
   </header>
-  <RouterView />
+  <router-view />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
+import { h, reactive, ref } from 'vue';
+import type { VueElement } from 'vue';
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
+import type { ItemType } from 'ant-design-vue';
+import {
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons-vue';
+const collapsed = ref<boolean>(false);
+
+function getItem(
+  label: VueElement | string,
+  key: string,
+  icon?: any,
+  children?: ItemType[],
+  type?: 'group',
+): ItemType {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as ItemType;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const items: ItemType[] = reactive([
+  getItem('Navigation One', 'sub1', () => h(MailOutlined), [
+    getItem('Option 1', '1'),
+    getItem('Option 2', '2'),
+    getItem('Option 3', '3'),
+    getItem('Option 4', '4'),
+  ]),
+  getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
+    getItem('Option 5', '5'),
+    getItem('Option 6', '6'),
+    getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+  ]),
+  getItem('Navigation Three', 'sub4', () => h(SettingOutlined), [
+    getItem('Option 9', '9'),
+    getItem('Option 10', '10'),
+    getItem('Option 11', '11'),
+    getItem('Option 12', '12'),
+  ]),
+]);
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+const state = reactive({
+  rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
+  openKeys: ['sub1'],
+  selectedKeys: [],
+});
+const onOpenChange = (openKeys: string[]) => {
+  const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
+  if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    state.openKeys = openKeys;
+  } else {
+    state.openKeys = latestOpenKey ? [latestOpenKey] : [];
   }
+};
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+<style>
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 16px;
+}
 
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.site-layout .site-layout-background {
+  background: #fff;
 }
 </style>

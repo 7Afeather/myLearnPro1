@@ -1,17 +1,34 @@
 <template>
   <div>HOME PAGE</div>
+  <a-row :gutter="16">
+    <a-col class="gutter-row" :span="6">
+      <div class="gutter-box">col-6</div>
+    </a-col>
+    <a-col class="gutter-row" :span="6">
+      <div class="gutter-box">col-6</div>
+    </a-col>
+    <a-col class="gutter-row" :span="6">
+      <div class="gutter-box">col-6</div>
+    </a-col>
+    <a-col class="gutter-row" :span="6">
+      <div class="gutter-box">col-6</div>
+    </a-col>
+  </a-row>
   <a-button v-bind="buttonProps" @click="changeTagName">Primary</a-button>
   <tag-modal
     :open="tagState.open"
     :value="tagState.value"
     :data="tagState.data"
-    @ok="tagState.open = false"
+    @ok="handleOk"
     @cancel="tagState.open = false"
   ></tag-modal>
+
+  <a-button type="primary" @click="twoFncHandler">两个方法</a-button>
 </template>
 <script setup>
 import { reactive } from 'vue';
 import TagModal from './components/tag/index.vue';
+import { message } from 'ant-design-vue';
 
 const buttonProps = {
   type: 'link',
@@ -51,5 +68,25 @@ const changeTagName = () => {
   const r = Math.floor(Math.random() * 9);
   tagState.open = true;
   tagState.value = nameList[r];
+};
+
+const returnHandler = () => {
+  return new Promise((resolve, reject) => {
+    return message.warning('return handler');
+    resolve();
+  });
+};
+
+const returnHandler2 = () => {
+  return message.warning('return handler');
+};
+
+const twoFncHandler = async () => {
+  await Promise.resolve(returnHandler2());
+  console.log('two fnc');
+};
+
+const handleOk = () => {
+  returnHandler2();
 };
 </script>

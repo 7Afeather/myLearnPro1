@@ -49,7 +49,12 @@ const props = withDefaults(defineProps<Props>(), {
   value: null,
   data: () => {},
 });
-const emit = defineEmits(['ok', 'cancel']);
+const emit = defineEmits({
+  ok: fn => {
+    return fn && fn();
+  },
+  cancel: null,
+});
 const currentValue = computed(() => {
   return props.value;
 });
@@ -57,7 +62,7 @@ watch(
   () => props.open,
   n => {
     if (n) {
-      console.log('currentValue', currentValue.value);
+      //   console.log('currentValue', currentValue.value);
     }
   },
   { immediate: true },
@@ -66,8 +71,14 @@ const modalState = reactive({
   title: '标签页',
   confirmLoading: false,
 });
-const handleOk = () => {
-  emit('ok');
+
+const handleOk = async () => {
+  await Promise.resolve(emit('ok'));
+  //   await new Promise(resolve => {
+  //     emit('ok');
+  //     resolve();
+  //   });
+  console.log('ok后的代码');
 };
 
 const fixedColumns = ref<TableColumnsType>([
