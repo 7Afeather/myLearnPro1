@@ -1,34 +1,53 @@
 <template>
-  <a-layout>
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo" />
-      <a-menu
-        v-model:selectedKeys="state.selectedKeys"
-        style="width: 256px"
-        mode="inline"
-        :open-keys="state.openKeys"
-        :items="items"
-        @openChange="onOpenChange"
-      ></a-menu>
-    </a-layout-sider>
-    <a-layout>
-      <a-layout-header style="background: #fff; padding: 0">
-        <menu-unfold-outlined
-          v-if="collapsed"
-          class="trigger"
-          @click="() => (collapsed = !collapsed)"
-        />
-        <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
-      </a-layout-header>
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
-        Content
-      </a-layout-content>
+  <div class="baseContainer">
+    <a-layout
+      :style="{
+        width: '100%',
+        height: '100%',
+      }"
+    >
+      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+        <div class="logo" />
+        <a-menu
+          v-model:selectedKeys="state.selectedKeys"
+          mode="inline"
+          theme="dark"
+          :open-keys="state.openKeys"
+          :items="items"
+          @openChange="onOpenChange"
+        ></a-menu>
+      </a-layout-sider>
+      <a-layout>
+        <a-layout-header style="background: #fff; padding: 0">
+          <menu-unfold-outlined
+            v-if="collapsed"
+            class="trigger"
+            :style="{
+              fontSize: '2em',
+              padding: '0 24px',
+            }"
+            @click="() => (collapsed = !collapsed)"
+          />
+          <menu-fold-outlined
+            :style="{
+              fontSize: '2em',
+              padding: '0 24px',
+            }"
+            v-else
+            class="trigger"
+            @click="() => (collapsed = !collapsed)"
+          />
+        </a-layout-header>
+        <a-layout-content
+          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+        >
+          Content
+        </a-layout-content>
+      </a-layout>
     </a-layout>
-  </a-layout>
+  </div>
 
-  <header>
+  <!-- <header>
     <div class="wrapper">
       <nav>
         <router-link to="/">Home</router-link>
@@ -36,22 +55,16 @@
       </nav>
     </div>
   </header>
-  <router-view />
+  <router-view /> -->
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+// import { RouterLink, RouterView } from 'vue-router';
 import { h, reactive, ref } from 'vue';
 import type { VueElement } from 'vue';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ItemType } from 'ant-design-vue';
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons-vue';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
 const collapsed = ref<boolean>(false);
 
 function getItem(
@@ -105,9 +118,13 @@ const onOpenChange = (openKeys: string[]) => {
 };
 </script>
 
-<style>
-#components-layout-demo-custom-trigger .trigger {
-  font-size: 18px;
+<style scoped>
+.baseContainer {
+  width: 100vw;
+  height: 100vh;
+}
+/* #components-layout-demo-custom-trigger .trigger {
+  font-size: 30px;
   line-height: 64px;
   padding: 0 24px;
   cursor: pointer;
@@ -116,7 +133,7 @@ const onOpenChange = (openKeys: string[]) => {
 
 #components-layout-demo-custom-trigger .trigger:hover {
   color: #1890ff;
-}
+} */
 
 #components-layout-demo-custom-trigger .logo {
   height: 32px;

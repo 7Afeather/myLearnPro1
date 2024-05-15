@@ -82,7 +82,8 @@ const returnHandler2 = () => {
 };
 
 const twoFncHandler = async () => {
-  await Promise.resolve(returnHandler2());
+  //   await Promise.resolve(returnHandler2());
+  returnHandler2();
   console.log('two fnc');
 };
 
