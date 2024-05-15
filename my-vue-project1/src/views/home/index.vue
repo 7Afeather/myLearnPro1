@@ -1,11 +1,18 @@
 <template>
   <div>HOME PAGE</div>
-  <a-row :gutter="16">
+  <a-row :gutter="[16, 24]">
     <a-col class="gutter-row" :span="6">
-      <div class="gutter-box">col-6</div>
+      <a-button v-bind="buttonProps" @click="changeTagName">Primary</a-button>
+      <tag-modal
+        :open="tagState.open"
+        :value="tagState.value"
+        :data="tagState.data"
+        @ok="handleOk"
+        @cancel="tagState.open = false"
+      ></tag-modal>
     </a-col>
     <a-col class="gutter-row" :span="6">
-      <div class="gutter-box">col-6</div>
+      <a-button type="primary" @click="twoFncHandler">方法</a-button>
     </a-col>
     <a-col class="gutter-row" :span="6">
       <div class="gutter-box">col-6</div>
@@ -14,16 +21,6 @@
       <div class="gutter-box">col-6</div>
     </a-col>
   </a-row>
-  <a-button v-bind="buttonProps" @click="changeTagName">Primary</a-button>
-  <tag-modal
-    :open="tagState.open"
-    :value="tagState.value"
-    :data="tagState.data"
-    @ok="handleOk"
-    @cancel="tagState.open = false"
-  ></tag-modal>
-
-  <a-button type="primary" @click="twoFncHandler">两个方法</a-button>
 </template>
 <script setup>
 import { reactive } from 'vue';
@@ -31,7 +28,7 @@ import TagModal from './components/tag/index.vue';
 import { message } from 'ant-design-vue';
 
 const buttonProps = {
-  type: 'link',
+  type: 'primary',
   loading: false,
   size: 'middle',
 };
@@ -72,16 +69,26 @@ const changeTagName = () => {
 
 const returnHandler = () => {
   return new Promise((resolve, reject) => {
-    return message.warning('return handler');
+    return message.warning('return handler 两个方法(一个方法含return)');
     resolve();
   });
 };
 
+const returnStatus = false;
+message.config({
+  top: `100px`,
+  duration: 2,
+  maxCount: 1,
+  rtl: true,
+  // prefixCls全局设置message弹窗的样式
+  prefixCls: 'my-message',
+});
+
 const returnHandler2 = () => {
-  return message.warning('return handler');
+  return message.warning({ content: 'return handler 两个方法(一个方法含return)' });
 };
 
-const twoFncHandler = async () => {
+const twoFncHandler = () => {
   //   await Promise.resolve(returnHandler2());
   returnHandler2();
   console.log('two fnc');
@@ -91,3 +98,8 @@ const handleOk = () => {
   returnHandler2();
 };
 </script>
+<style>
+.my-message {
+  color: red;
+}
+</style>
