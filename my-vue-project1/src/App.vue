@@ -6,8 +6,8 @@
         height: '100%',
       }"
     >
-      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-        <div class="logo" />
+      <a-layout-sider :width="250" v-model:collapsed="collapsed" :trigger="null" collapsible>
+        <div class="logo"></div>
         <a-menu
           v-model:selectedKeys="state.selectedKeys"
           mode="inline"
@@ -41,7 +41,7 @@
         <a-layout-content
           :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
         >
-          Content
+          <router-view />
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -123,19 +123,7 @@ const onOpenChange = (openKeys: string[]) => {
   width: 100vw;
   height: 100vh;
 }
-/* #components-layout-demo-custom-trigger .trigger {
-  font-size: 30px;
-  line-height: 64px;
-  padding: 0 24px;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-#components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
-} */
-
-#components-layout-demo-custom-trigger .logo {
+.baseContainer .logo {
   height: 32px;
   background: rgba(255, 255, 255, 0.3);
   margin: 16px;
