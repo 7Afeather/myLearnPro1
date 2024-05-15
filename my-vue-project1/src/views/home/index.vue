@@ -15,7 +15,7 @@
       <a-button type="primary" @click="twoFncHandler">方法</a-button>
     </a-col>
     <a-col class="gutter-row" :span="6">
-      <div class="gutter-box">col-6</div>
+      <component :is="MailOutlined" />
     </a-col>
     <a-col class="gutter-row" :span="6">
       <div class="gutter-box">col-6</div>
@@ -26,6 +26,7 @@
 import { reactive } from 'vue';
 import TagModal from './components/tag/index.vue';
 import { message } from 'ant-design-vue';
+import { MailOutlined } from '@ant-design/icons-vue';
 
 const buttonProps = {
   type: 'primary',

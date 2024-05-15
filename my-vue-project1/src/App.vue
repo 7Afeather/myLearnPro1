@@ -15,6 +15,7 @@
           :open-keys="state.openKeys"
           :items="items"
           @openChange="onOpenChange"
+          @click="clickItem"
         ></a-menu>
       </a-layout-sider>
       <a-layout>
@@ -65,6 +66,8 @@ import type { VueElement } from 'vue';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ItemType } from 'ant-design-vue';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
+import { uuid } from '@/utils/generate-uuid';
+
 const collapsed = ref<boolean>(false);
 
 function getItem(
@@ -84,12 +87,13 @@ function getItem(
 }
 
 const items: ItemType[] = reactive([
-  getItem('Navigation One', 'sub1', () => h(MailOutlined), [
-    getItem('Option 1', '1'),
-    getItem('Option 2', '2'),
-    getItem('Option 3', '3'),
-    getItem('Option 4', '4'),
-  ]),
+  {
+    key: uuid(),
+    icon: () => h(MailOutlined),
+    children: null,
+    label: '首页',
+    type: null,
+  },
   getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
     getItem('Option 5', '5'),
     getItem('Option 6', '6'),
@@ -103,6 +107,8 @@ const items: ItemType[] = reactive([
   ]),
 ]);
 
+console.log('items', items);
+
 const state = reactive({
   rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
   openKeys: ['sub1'],
@@ -115,6 +121,9 @@ const onOpenChange = (openKeys: string[]) => {
   } else {
     state.openKeys = latestOpenKey ? [latestOpenKey] : [];
   }
+};
+const clickItem = ({ item, key, keyPath }) => {
+  console.log('item, key, keyPath', item, key, keyPath);
 };
 </script>
 
