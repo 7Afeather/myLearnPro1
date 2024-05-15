@@ -19,7 +19,7 @@
         ></a-menu>
       </a-layout-sider>
       <a-layout>
-        <a-layout-header style="background: #fff; padding: 0">
+        <a-layout-header style="background: #fff; padding: 0; display: flex; align-items: center">
           <menu-unfold-outlined
             v-if="collapsed"
             class="trigger"
@@ -38,6 +38,12 @@
             class="trigger"
             @click="() => (collapsed = !collapsed)"
           />
+          <a-breadcrumb>
+            <a-breadcrumb-item>Home</a-breadcrumb-item>
+            <a-breadcrumb-item><router-link to="/">Home</router-link></a-breadcrumb-item>
+            <a-breadcrumb-item><router-link to="/about">About</router-link></a-breadcrumb-item>
+            <a-breadcrumb-item>PageName</a-breadcrumb-item>
+          </a-breadcrumb>
         </a-layout-header>
         <a-layout-content
           :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
