@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view>
     <!-- 注意，如果需要兼容微信小程序，最好通过setRules方法设置rules规则 -->
     <up-form
       labelPosition="left"
@@ -88,8 +88,4 @@ function sexSelect(e: any) {
 }
 </script>
 
-<style>
-.container {
-  height: 100vh;
-}
-</style>
+<style></style>
