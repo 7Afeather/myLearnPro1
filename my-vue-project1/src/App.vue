@@ -53,20 +53,10 @@
       </a-layout>
     </a-layout>
   </div>
-
-  <!-- <header>
-    <div class="wrapper">
-      <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-      </nav>
-    </div>
-  </header>
-  <router-view /> -->
 </template>
 
 <script setup lang="ts">
-// import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView } from 'vue-router';
 import { h, reactive, ref } from 'vue';
 import type { VueElement } from 'vue';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
