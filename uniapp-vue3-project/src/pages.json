@@ -11,7 +11,7 @@
     {
       "path": "pages/my/index",
       "style": {
-        "navigationBarTitleText": "uni-app"
+        "navigationBarTitleText": "功能管理"
       }
     }
   ],
