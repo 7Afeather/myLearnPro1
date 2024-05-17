@@ -6,6 +6,9 @@
     @cancel="$emit('cancel')"
     @ok="handleOk"
   >
+    <div>
+      <h3>表格名称TITLE</h3>
+    </div>
     <a-table :columns="fixedColumns" :data-source="data.costomerList" :pagination="false" bordered>
       <template #summary>
         <a-table-summary fixed>
@@ -30,7 +33,8 @@
 </template>
 <script setup lang="ts">
 import { computed, watch, reactive, ref } from 'vue';
-import type { TableColumnsType } from 'ant-design-vue';
+// import type { TableColumnsType } from 'ant-design-vue';
+import type { ColumnType } from 'ant-design-vue/lib/table';
 
 export interface DataProps {
   supplierCode?: string;
@@ -40,19 +44,21 @@ export interface DataProps {
 
 export interface Props {
   open?: boolean;
-  value?: string;
+  value?: string | null;
   data?: DataProps;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   open: false,
   value: null,
-  data: () => {},
+  data: () => ({
+    supplierCode: '',
+    supplierName: '',
+    costomerList: [],
+  }),
 });
 const emit = defineEmits({
-  ok: fn => {
-    return fn && fn();
-  },
+  ok: null,
   cancel: null,
 });
 const currentValue = computed(() => {
@@ -81,7 +87,7 @@ const handleOk = async () => {
   console.log('ok后的代码');
 };
 
-const fixedColumns = ref<TableColumnsType>([
+const fixedColumns = ref<ColumnType[]>([
   {
     title: '名称',
     dataIndex: 'name',

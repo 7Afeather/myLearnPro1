@@ -63,6 +63,9 @@ import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/ico
 import type { ItemType } from 'ant-design-vue';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
 import { uuid } from '@/utils/generate-uuid';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const collapsed = ref<boolean>(false);
 
@@ -84,11 +87,20 @@ function getItem(
 
 const items: ItemType[] = reactive([
   {
-    key: uuid(),
+    key: uuid(32),
     icon: () => h(MailOutlined),
     children: null,
     label: '首页',
     type: null,
+    path: '/',
+  },
+  {
+    key: uuid(32),
+    icon: () => h(AppstoreOutlined),
+    children: null,
+    label: '关于',
+    type: null,
+    path: '/about',
   },
   getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
     getItem('Option 5', '5'),
@@ -103,23 +115,21 @@ const items: ItemType[] = reactive([
   ]),
 ]);
 
-console.log('items', items);
-
 const state = reactive({
   rootSubmenuKeys: ['sub1', 'sub2', 'sub4'],
   openKeys: ['sub1'],
   selectedKeys: [],
 });
 const onOpenChange = (openKeys: string[]) => {
-  const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1);
+  const latestOpenKey: any = openKeys.find(key => state.openKeys.indexOf(key) === -1);
   if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
     state.openKeys = openKeys;
   } else {
     state.openKeys = latestOpenKey ? [latestOpenKey] : [];
   }
 };
-const clickItem = ({ item, key, keyPath }) => {
-  console.log('item, key, keyPath', item, key, keyPath);
+const clickItem = ({ item }: any) => {
+  router.push({ path: item.originItemValue.path });
 };
 </script>
 
