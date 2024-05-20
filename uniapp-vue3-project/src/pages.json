@@ -11,6 +11,18 @@
   },
   "pages": [
     {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/nut1/index",
+      "style": {
+        "navigationBarTitleText": "untui测试"
+      }
+    },
+    {
       "path": "pages/my/index",
       "style": {
         "navigationBarTitleText": "功能管理"

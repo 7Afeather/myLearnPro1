@@ -59,6 +59,7 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4000720240327002",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4000720240327002",
     "dayjs": "^1.11.11",
+    "lodash-es": "^4.17.21",
     "nutui-uniapp": "^1.7.10",
     "uview-plus": "^3.2.22",
     "vue": "^3.3.11",
