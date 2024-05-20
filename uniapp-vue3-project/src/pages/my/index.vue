@@ -203,7 +203,9 @@ const clear = () => {
   functionList.value = [];
 };
 
-const submit = () => {};
+const submit = () => {
+  console.log("functionList.value", functionList.value);
+};
 </script>
 
 <style lang="scss">

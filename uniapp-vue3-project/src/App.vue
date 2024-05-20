@@ -12,4 +12,5 @@ onHide(() => {
 </script>
 <style lang="scss">
 @import "uview-plus/index.scss";
+@import "nutui-uniapp/styles/index.scss";
 </style>
