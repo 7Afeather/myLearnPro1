@@ -115,6 +115,14 @@ const items: ItemType[] = reactive([
     type: null,
     path: '/about',
   },
+  {
+    key: 3,
+    icon: () => h(SettingOutlined),
+    children: null,
+    label: 'Algorithm',
+    type: null,
+    path: '/algorithm',
+  },
   getItem('Navigation Two', 'sub2', 'sub2', () => h(AppstoreOutlined), [
     getItem('Option 5', '5', '5'),
     getItem('Option 6', '6', '6'),
@@ -170,7 +178,6 @@ const queryMenu = (keyPath: string[]): any => {
   const result: any[] = [];
   keyPath.forEach(kp => {
     // 从 items 中查找，children中查找
-    console.log('kp', kp);
     if (loop(items, kp)) {
       result.push(loop(items, kp));
     }

@@ -86,6 +86,8 @@ message.config({
 });
 
 const returnHandler2 = () => {
+  // throw new Error('报错了');
+  process.exit();
   return message.warning({ content: 'return handler 两个方法(一个方法含return)' });
 };
 

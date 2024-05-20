@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/home/index.vue';
 import CompanyIntroduction from '@/views/about/company-introduction/index.vue';
+import Algorithm from '@/views/algorithm/index.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
           component: CompanyIntroduction,
         },
       ],
+    },
+    {
+      path: '/algorithm',
+      name: 'algorithm',
+      component: Algorithm,
     },
     // {
     //   path: '/about',
