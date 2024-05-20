@@ -39,10 +39,9 @@
             @click="() => (collapsed = !collapsed)"
           />
           <a-breadcrumb>
-            <a-breadcrumb-item>Home</a-breadcrumb-item>
-            <a-breadcrumb-item><router-link to="/">Home</router-link></a-breadcrumb-item>
-            <a-breadcrumb-item><router-link to="/about">About</router-link></a-breadcrumb-item>
-            <a-breadcrumb-item>PageName</a-breadcrumb-item>
+            <a-breadcrumb-item v-for="(item, index) in breadcrumbPathArray" :key="index">
+              <router-link :to="item.path">{{ item.name }}</router-link>
+            </a-breadcrumb-item>
           </a-breadcrumb>
         </a-layout-header>
         <a-layout-content
@@ -62,12 +61,15 @@ import type { VueElement } from 'vue';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ItemType } from 'ant-design-vue';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue';
-import { uuid } from '@/utils/generate-uuid';
+// import { uuid } from '@/utils/generate-uuid';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
 const collapsed = ref<boolean>(false);
+
+// 面包屑路径参数
+const breadcrumbPathArray = ref([]);
 
 function getItem(
   label: VueElement | string,
@@ -87,7 +89,7 @@ function getItem(
 
 const items: ItemType[] = reactive([
   {
-    key: uuid(32),
+    key: 1,
     icon: () => h(MailOutlined),
     children: null,
     label: '首页',
@@ -95,9 +97,18 @@ const items: ItemType[] = reactive([
     path: '/',
   },
   {
-    key: uuid(32),
+    key: 2,
     icon: () => h(AppstoreOutlined),
-    children: null,
+    children: [
+      {
+        key: 2.1,
+        icon: () => h(MailOutlined),
+        children: null,
+        label: '公司简介',
+        type: null,
+        path: '/companyIntroduction',
+      },
+    ],
     label: '关于',
     type: null,
     path: '/about',
@@ -128,7 +139,42 @@ const onOpenChange = (openKeys: string[]) => {
     state.openKeys = latestOpenKey ? [latestOpenKey] : [];
   }
 };
-const clickItem = ({ item }: any) => {
+
+// 结束条件：查出 keyPath 对应的两个菜单配置对象
+// 循环对象：items items.children
+const loop = (array: any[], key: string): any => {
+  if (array) {
+    for (let index = 0; index < array.length; index++) {
+      // 结束条件
+      if (key === array[index].key) {
+        return {
+          name: array[index].label,
+          path: array[index].path,
+        };
+      } else {
+        // 循环，为空的时候不退出循环，知道children循环完成
+        if (loop(array[index].children, key)) {
+          return loop(array[index].children, key);
+        }
+      }
+    }
+  }
+};
+
+const queryMenu = (keyPath: string[]): any => {
+  const result: any[] = [];
+  keyPath.forEach(kp => {
+    // 从 items 中查找，children中查找
+    console.log('kp', kp);
+    if (loop(items, kp)) {
+      result.push(loop(items, kp));
+    }
+  });
+  return result;
+};
+
+const clickItem = ({ item, keyPath }: any) => {
+  breadcrumbPathArray.value = queryMenu(keyPath);
   router.push({ path: item.originItemValue.path });
 };
 </script>
