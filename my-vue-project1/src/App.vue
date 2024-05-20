@@ -69,11 +69,12 @@ const router = useRouter();
 const collapsed = ref<boolean>(false);
 
 // 面包屑路径参数
-const breadcrumbPathArray = ref([]);
+const breadcrumbPathArray = ref<any[]>([]);
 
 function getItem(
   label: VueElement | string,
   key: string,
+  path: string,
   icon?: any,
   children?: ItemType[],
   type?: 'group',
@@ -84,6 +85,7 @@ function getItem(
     children,
     label,
     type,
+    path,
   } as ItemType;
 }
 
@@ -113,16 +115,19 @@ const items: ItemType[] = reactive([
     type: null,
     path: '/about',
   },
-  getItem('Navigation Two', 'sub2', () => h(AppstoreOutlined), [
-    getItem('Option 5', '5'),
-    getItem('Option 6', '6'),
-    getItem('Submenu', 'sub3', null, [getItem('Option 7', '7'), getItem('Option 8', '8')]),
+  getItem('Navigation Two', 'sub2', 'sub2', () => h(AppstoreOutlined), [
+    getItem('Option 5', '5', '5'),
+    getItem('Option 6', '6', '6'),
+    getItem('Submenu', 'sub3', 'sub3', null, [
+      getItem('Option 7', '7', '7'),
+      getItem('Option 8', '8', '8'),
+    ]),
   ]),
-  getItem('Navigation Three', 'sub4', () => h(SettingOutlined), [
-    getItem('Option 9', '9'),
-    getItem('Option 10', '10'),
-    getItem('Option 11', '11'),
-    getItem('Option 12', '12'),
+  getItem('Navigation Three', 'sub4', 'sub4', () => h(SettingOutlined), [
+    getItem('Option 9', '9', '9'),
+    getItem('Option 10', '10', '10'),
+    getItem('Option 11', '11', '11'),
+    getItem('Option 12', '12', '12'),
   ]),
 ]);
 
