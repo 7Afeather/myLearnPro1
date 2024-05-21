@@ -114,6 +114,7 @@ const getRealCode = (codeStr: string, sptr: Spliter) => {
 };
 
 const blurEvent = async (val: any) => {
+  console.log("val", val);
   if (val) {
     const sptr = getSpliter();
     setTimeout(() => {
