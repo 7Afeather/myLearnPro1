@@ -108,7 +108,7 @@ const items: ItemType[] = reactive([
         children: null,
         label: '公司简介',
         type: null,
-        path: '/companyIntroduction',
+        path: '/about/companyIntroduction',
       },
     ],
     label: '关于',
