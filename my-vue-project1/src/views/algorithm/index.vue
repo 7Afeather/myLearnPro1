@@ -70,11 +70,6 @@ function knapsack(weights: number[], values: number[], w: number) {
         f[i][j] = f[i - 1][j];
       } else {
         f[i][j] = Math.max(f[i - 1][j], f[i - 1][j - weights[i]] + values[i]);
-        console.log(
-          'f[i - 1][j],f[i - 1][j - weights[i]] + values[i]',
-          f[i - 1][j],
-          f[i - 1][j - weights[i]] + values[i],
-        );
       }
     }
   }
